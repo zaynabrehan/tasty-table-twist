@@ -13,7 +13,7 @@ const Home = () => {
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <img
           src={heroBanner}
-          alt="Howdy Restaurant signature dishes spread"
+          alt="Jushhpk Restaurant signature dishes spread"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />

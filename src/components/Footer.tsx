@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <h2 className="text-2xl font-display font-bold text-primary mb-4">HOWDY</h2>
+            <h2 className="text-2xl font-display font-bold text-primary mb-4">JUSHHPK</h2>
             <p className="text-sm text-muted-foreground font-body leading-relaxed">
               Experience the finest Pakistani cuisine with bold flavors and warm hospitality.
             </p>
@@ -72,7 +72,7 @@ const Footer = () => {
 
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground font-body">
-            © 2026 Howdy Restaurant. All rights reserved.
+            © 2026 Jushhpk Restaurant. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {["Facebook", "Instagram", "Twitter"].map((social) => (

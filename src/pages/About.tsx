@@ -5,7 +5,7 @@ const About = () => {
     <div className="container mx-auto px-4 py-10">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-display font-bold text-foreground mb-2">
-          About <span className="text-gradient-gold">Howdy</span>
+          About <span className="text-gradient-gold">Jushhpk</span>
         </h1>
         <p className="text-muted-foreground font-body">Our story, our passion</p>
       </div>
@@ -14,7 +14,7 @@ const About = () => {
         <div className="rounded-2xl overflow-hidden shadow-card">
           <img
             src={restaurantInterior}
-            alt="Howdy Restaurant interior with warm ambient lighting"
+            alt="Jushhpk Restaurant interior with warm ambient lighting"
             className="w-full h-80 object-cover"
           />
         </div>
@@ -23,7 +23,7 @@ const About = () => {
             A Legacy of Flavor
           </h2>
           <p className="text-muted-foreground font-body leading-relaxed">
-            Born in the heart of Lahore, Howdy brings together the rich culinary traditions of Pakistan with a modern dining experience. Every dish tells a story — of spices ground fresh, of recipes passed down through generations, of flavors that bring people together.
+            Born in the heart of Lahore, Jushhpk brings together the rich culinary traditions of Pakistan with a modern dining experience. Every dish tells a story — of spices ground fresh, of recipes passed down through generations, of flavors that bring people together.
           </p>
           <p className="text-muted-foreground font-body leading-relaxed">
             Our chefs use only the finest ingredients, sourced locally and prepared with meticulous attention to detail. From our signature Seekh Kebabs to our aromatic Biryanis, every bite is crafted to deliver an unforgettable experience.
