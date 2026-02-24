@@ -36,7 +36,7 @@ const BranchSelection = () => {
 
       <div className="relative z-10 text-center px-4 max-w-2xl mx-auto">
         <h1 className="text-5xl md:text-7xl font-display font-bold text-primary mb-3 tracking-wider">
-          HOWDY
+          JUSHHPK
         </h1>
         <p className="text-lg text-muted-foreground font-body mb-2">
           Premium Pakistani Cuisine

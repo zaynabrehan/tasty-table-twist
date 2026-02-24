@@ -49,7 +49,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/home" className="flex-shrink-0">
             <h1 className="text-2xl font-display font-bold text-primary tracking-wide">
-              HOWDY
+              JUSHHPK
             </h1>
           </Link>
 
