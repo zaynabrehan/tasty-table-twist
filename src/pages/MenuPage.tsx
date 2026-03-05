@@ -1,7 +1,13 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
+import { motion } from "framer-motion";
 import FoodCard from "@/components/FoodCard";
 import { menuItems, categories } from "@/data/menu";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -26,18 +32,18 @@ const MenuPage = () => {
   return (
     <div className="container mx-auto px-4 py-10">
       {/* Header */}
-      <div className="text-center mb-10">
+      <motion.div initial="hidden" animate="visible" variants={fadeUp} className="text-center mb-10">
         <h1 className="text-4xl font-display font-bold text-foreground mb-2">
-          Our <span className="text-gradient-gold">Menu</span>
+          Our <span className="text-gradient-fire">Menu</span>
         </h1>
         <p className="text-muted-foreground font-body">
           Discover our handcrafted dishes made with the finest ingredients
         </p>
-      </div>
+      </motion.div>
 
       {/* Search */}
       <div className="max-w-md mx-auto mb-8">
-        <div className="flex items-center bg-secondary rounded-lg px-4 py-3">
+        <div className="flex items-center glass rounded-xl px-4 py-3 focus-within:shadow-fire transition-shadow">
           <Search className="w-5 h-5 text-muted-foreground mr-3" />
           <input
             type="text"
@@ -55,10 +61,10 @@ const MenuPage = () => {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-4 py-2 rounded-lg text-sm font-bold font-body transition-all ${
+            className={`px-4 py-2 rounded-xl text-sm font-bold font-body transition-all ${
               activeCategory === cat
-                ? "bg-gradient-gold text-primary-foreground"
-                : "bg-secondary text-muted-foreground hover:text-foreground"
+                ? "bg-gradient-fire text-primary-foreground shadow-fire"
+                : "glass text-muted-foreground hover:text-foreground"
             }`}
           >
             {cat}
@@ -69,8 +75,15 @@ const MenuPage = () => {
       {/* Grid */}
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filtered.map((item) => (
-            <FoodCard key={item.id} item={item} />
+          {filtered.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+            >
+              <FoodCard item={item} />
+            </motion.div>
           ))}
         </div>
       ) : (

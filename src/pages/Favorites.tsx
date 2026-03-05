@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import FoodCard from "@/components/FoodCard";
 import { menuItems } from "@/data/menu";
 import { useStore } from "@/context/StoreContext";
@@ -10,19 +11,30 @@ const Favorites = () => {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <div className="text-center mb-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-10"
+      >
         <h1 className="text-4xl font-display font-bold text-foreground mb-2">
-          Your <span className="text-gradient-gold">Favorites</span>
+          Your <span className="text-gradient-fire">Favorites</span>
         </h1>
         <p className="text-muted-foreground font-body">
           Dishes you've saved for later
         </p>
-      </div>
+      </motion.div>
 
       {favoriteItems.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {favoriteItems.map((item) => (
-            <FoodCard key={item.id} item={item} />
+          {favoriteItems.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+            >
+              <FoodCard item={item} />
+            </motion.div>
           ))}
         </div>
       ) : (
@@ -34,7 +46,7 @@ const Favorites = () => {
           </p>
           <Link
             to="/menu"
-            className="inline-flex bg-gradient-gold text-primary-foreground px-6 py-3 rounded-lg font-bold font-body hover:opacity-90 transition-opacity"
+            className="inline-flex bg-gradient-fire text-primary-foreground px-6 py-3 rounded-xl font-bold font-body hover:shadow-fire transition-all"
           >
             Browse Menu
           </Link>

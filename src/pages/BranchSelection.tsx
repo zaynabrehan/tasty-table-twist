@@ -1,7 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/context/StoreContext";
 import { MapPin, Clock, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import restaurantInterior from "@/assets/restaurant-interior.jpg";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.15, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+  }),
+};
 
 const BranchSelection = () => {
   const { setBranch } = useStore();
@@ -26,36 +36,50 @@ const BranchSelection = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-dark flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center relative overflow-hidden">
       {/* BG Image overlay */}
       <div
-        className="absolute inset-0 opacity-20 bg-cover bg-center"
+        className="absolute inset-0 opacity-15 bg-cover bg-center"
         style={{ backgroundImage: `url(${restaurantInterior})` }}
       />
-      <div className="absolute inset-0 bg-background/80" />
+      <div className="absolute inset-0 bg-background/85" />
 
-      <div className="relative z-10 text-center px-4 max-w-2xl mx-auto">
-        <h1 className="text-5xl md:text-7xl font-display font-bold text-primary mb-3 tracking-wider">
+      {/* Floating blobs */}
+      <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl animate-float" />
+      <div className="absolute bottom-20 left-20 w-72 h-72 rounded-full bg-accent/5 blur-3xl animate-float" style={{ animationDelay: "3s" }} />
+
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 text-center px-4 max-w-2xl mx-auto"
+      >
+        <motion.h1 variants={fadeUp} custom={0} className="text-5xl md:text-7xl font-display font-bold text-gradient-fire mb-3 tracking-wider">
           JUSHHPK
-        </h1>
-        <p className="text-lg text-muted-foreground font-body mb-2">
-          Premium Pakistani Cuisine
-        </p>
-        <div className="w-20 h-0.5 bg-gradient-gold mx-auto mb-10" />
+        </motion.h1>
+        <motion.p variants={fadeUp} custom={1} className="text-lg text-muted-foreground font-body mb-2">
+          Premium Pakistani & Turkish Cuisine
+        </motion.p>
+        <motion.div variants={fadeUp} custom={2} className="w-20 h-1 bg-gradient-fire mx-auto mb-12 rounded-full" />
 
-        <h2 className="text-xl font-display font-semibold text-foreground mb-8">
+        <motion.h2 variants={fadeUp} custom={3} className="text-xl font-display font-semibold text-foreground mb-8">
           Select Your Branch
-        </h2>
+        </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {branches.map((b) => (
-            <button
+          {branches.map((b, i) => (
+            <motion.button
               key={b.name}
+              variants={fadeUp}
+              custom={4 + i}
               onClick={() => selectBranch(b.name)}
-              className="group bg-card/80 backdrop-blur-sm border border-border hover:border-primary/50 rounded-xl p-6 text-left transition-all duration-300 hover:shadow-gold"
+              whileHover={{ y: -6 }}
+              whileTap={{ scale: 0.98 }}
+              className="group glass-card rounded-2xl p-6 text-left transition-all duration-300 hover:shadow-fire"
             >
               <div className="flex items-center gap-2 mb-3">
-                <MapPin className="w-5 h-5 text-primary" />
+                <div className="w-8 h-8 rounded-lg bg-gradient-fire flex items-center justify-center">
+                  <MapPin className="w-4 h-4 text-primary-foreground" />
+                </div>
                 <h3 className="text-lg font-display font-bold text-foreground">
                   {b.name}
                 </h3>
@@ -70,10 +94,10 @@ const BranchSelection = () => {
               <div className="flex items-center gap-1 text-primary text-sm font-bold font-body group-hover:gap-2 transition-all">
                 Order Now <ArrowRight className="w-4 h-4" />
               </div>
-            </button>
+            </motion.button>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
