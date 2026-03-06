@@ -34,13 +34,12 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Bar - Tagline */}
-      <div className="bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 border-b border-border">
-        <div className="container mx-auto px-4 py-2.5 flex items-center justify-between text-sm">
-          <span className="font-display font-semibold tracking-wide">
-            <span className="text-primary">Food</span>{" "}
-            <span className="text-foreground/80">That Makes You Go</span>{" "}
-            <span className="text-destructive font-bold">Shh..</span>
+      {/* Top Bar - Timings */}
+      <div className="bg-primary/10 border-b border-border">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-between text-sm">
+          <span className="text-muted-foreground font-body">
+            <Clock className="w-3.5 h-3.5 inline mr-1 text-primary" />
+            Mon–Thu: 12 PM – 2 AM &nbsp;|&nbsp; Fri–Sun: 3 PM – 2 AM
           </span>
           <div className="flex items-center gap-4">
             <a href="tel:03269946142" className="flex items-center gap-1 text-primary hover:text-orange-light transition-colors">

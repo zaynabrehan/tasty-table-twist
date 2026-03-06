@@ -60,13 +60,12 @@ const Home = () => {
               </motion.div>
 
               <motion.h1 variants={fadeUp} custom={1} className="text-5xl md:text-7xl font-display font-bold text-foreground leading-tight mb-6">
-                Taste the{" "}
-                <span className="text-gradient-fire">Authentic</span>{" "}
-                Flavors
+                Food That Makes You Go{" "}
+                <span className="text-gradient-fire">Shh..</span>
               </motion.h1>
 
               <motion.p variants={fadeUp} custom={2} className="text-muted-foreground font-body text-lg mb-10 leading-relaxed max-w-md">
-                From sizzling kebabs to aromatic biryanis — experience the finest cuisine crafted with love and tradition.
+                Craving vibes grabbing Jushh!!
               </motion.p>
 
               <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4">
