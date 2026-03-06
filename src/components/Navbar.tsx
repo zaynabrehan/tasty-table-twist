@@ -64,10 +64,8 @@ const Navbar = () => {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
           {/* Logo */}
           <Link to="/home" className="flex-shrink-0 flex items-center gap-2">
-            <div className="w-9 h-9 rounded-full bg-foreground flex items-center justify-center overflow-hidden">
-              <span className="text-xs font-display font-extrabold">
-                <span className="text-primary">J</span><span className="text-destructive">!</span>
-              </span>
+            <div className="w-9 h-9 rounded-full overflow-hidden">
+              <img src={jushhLogo} alt="Jushh!! Logo" className="w-full h-full object-cover" />
             </div>
             <JushhLogo size="sm" />
           </Link>
