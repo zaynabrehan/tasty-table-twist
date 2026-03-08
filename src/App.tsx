@@ -40,6 +40,7 @@ const AppLayout = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:orderId" element={<OrderTracking />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

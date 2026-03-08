@@ -134,13 +134,25 @@ const Checkout = () => {
       </div>
 
       <div className="mt-6">
+        <label className="text-sm text-muted-foreground font-body mb-1.5 block">Delivery Address *</label>
+        <textarea
+          value={deliveryAddress}
+          onChange={(e) => setDeliveryAddress(e.target.value)}
+          placeholder="Enter your full delivery address..."
+          className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-foreground font-body placeholder:text-muted-foreground outline-none focus:border-primary focus:shadow-fire transition-all resize-none"
+          rows={2}
+          maxLength={300}
+        />
+      </div>
+
+      <div className="mt-4">
         <label className="text-sm text-muted-foreground font-body mb-1.5 block">Order Notes (optional)</label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Any special instructions..."
           className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-foreground font-body placeholder:text-muted-foreground outline-none focus:border-primary focus:shadow-fire transition-all resize-none"
-          rows={3}
+          rows={2}
           maxLength={500}
         />
       </div>
