@@ -6,9 +6,10 @@ import { Loader2, Minus, Plus, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Checkout = () => {
-  const { cart, updateQuantity, removeFromCart, cartTotal, clearCart, branch } = useStore();
+  const { cart, updateQuantity, removeFromCart, cartTotal, clearCart, branch, setBranch } = useStore();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [notes, setNotes] = useState("");
@@ -134,6 +135,19 @@ const Checkout = () => {
       </div>
 
       <div className="mt-6">
+        <label className="text-sm text-muted-foreground font-body mb-1.5 block">Branch *</label>
+        <Select value={branch || ""} onValueChange={(val) => setBranch(val)}>
+          <SelectTrigger className="w-full bg-secondary border border-border rounded-xl text-foreground font-body">
+            <SelectValue placeholder="Select a branch" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Johar Town">Johar Town</SelectItem>
+            <SelectItem value="DHA">DHA</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="mt-4">
         <label className="text-sm text-muted-foreground font-body mb-1.5 block">Delivery Address *</label>
         <textarea
           value={deliveryAddress}
