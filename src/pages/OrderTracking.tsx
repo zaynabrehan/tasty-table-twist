@@ -2,17 +2,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import { CheckCircle, ChefHat, Clock, MapPin, Package, Phone, Truck } from "lucide-react";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import "leaflet/dist/leaflet.css";
-
-const LazyOrderMap = lazy(() => import("@/components/OrderMap"));
-
-// Branch coordinates
-const BRANCH_COORDS: Record<string, [number, number]> = {
-  "Johar Town": [31.4697, 74.2728],
-  "DHA Phase 1": [31.4784, 74.3753],
-};
 
 interface Order {
   id: string;
@@ -40,15 +31,9 @@ const STATUS_STEPS = [
   { key: "delivered", label: "Delivered", icon: MapPin, description: "Order delivered successfully!" },
 ];
 
-const getRiderProgress = (status: string): number => {
-  const progressMap: Record<string, number> = {
-    pending: 0,
-    confirmed: 0,
-    preparing: 0,
-    rider_picked: 0.5,
-    delivered: 1,
-  };
-  return progressMap[status] ?? 0;
+const BRANCH_COORDS: Record<string, [number, number]> = {
+  "Johar Town": [31.4697, 74.2728],
+  "DHA": [31.4784, 74.3753],
 };
 
 const OrderTracking = () => {
@@ -86,30 +71,21 @@ const OrderTracking = () => {
       .channel(`order-${orderId}`)
       .on(
         "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "orders",
-          filter: `id=eq.${orderId}`,
-        },
+        { event: "UPDATE", schema: "public", table: "orders", filter: `id=eq.${orderId}` },
         (payload) => {
           setOrder((prev) => (prev ? { ...prev, ...payload.new } : null));
         }
       )
       .subscribe();
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    return () => { supabase.removeChannel(channel); };
   }, [user, orderId]);
 
   if (!user) {
     return (
       <div className="container mx-auto p-10 text-center">
         <p className="text-muted-foreground font-body mb-4">Please sign in to track orders.</p>
-        <Link to="/signin" className="bg-gradient-fire text-primary-foreground px-6 py-3 rounded-xl font-bold">
-          Sign In
-        </Link>
+        <Link to="/signin" className="bg-gradient-fire text-primary-foreground px-6 py-3 rounded-xl font-bold">Sign In</Link>
       </div>
     );
   }
@@ -128,20 +104,19 @@ const OrderTracking = () => {
       <div className="container mx-auto p-10 text-center">
         <Package className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
         <p className="text-muted-foreground font-body">Order not found.</p>
-        <Link to="/orders" className="inline-block mt-4 text-primary font-bold">
-          View All Orders
-        </Link>
+        <Link to="/orders" className="inline-block mt-4 text-primary font-bold">View All Orders</Link>
       </div>
     );
   }
 
   const currentStepIndex = STATUS_STEPS.findIndex((s) => s.key === order.status);
   const branchCoords = BRANCH_COORDS[order.branch] || BRANCH_COORDS["Johar Town"];
-  const deliveryCoords: [number, number] = [branchCoords[0] + 0.015, branchCoords[1] + 0.02];
-  const riderProgress = getRiderProgress(order.status);
   const estimatedTime = order.estimated_delivery
     ? new Date(order.estimated_delivery).toLocaleTimeString("en-PK", { hour: "2-digit", minute: "2-digit" })
     : "30-45 mins";
+
+  // Static map using OpenStreetMap tile
+  const staticMapUrl = `https://staticmap.openstreetmap.de/staticmap.php?center=${branchCoords[0]},${branchCoords[1]}&zoom=13&size=800x300&maptype=mapnik&markers=${branchCoords[0]},${branchCoords[1]},red-pushpin`;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -162,15 +137,18 @@ const OrderTracking = () => {
         </div>
       </div>
 
-      {/* Map */}
+      {/* Static Map */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="rounded-2xl overflow-hidden shadow-card mb-6 border border-border"
       >
-        <Suspense fallback={<div style={{ height: 300 }} className="bg-muted animate-pulse" />}>
-          <LazyOrderMap branchCoords={branchCoords} deliveryCoords={deliveryCoords} riderProgress={riderProgress} />
-        </Suspense>
+        <img
+          src={staticMapUrl}
+          alt="Order delivery map"
+          className="w-full h-[300px] object-cover"
+          loading="lazy"
+        />
       </motion.div>
 
       {/* Status Steps */}
@@ -186,38 +164,25 @@ const OrderTracking = () => {
             const isCompleted = index <= currentStepIndex;
             const isCurrent = index === currentStepIndex;
             const Icon = step.icon;
-
             return (
               <div key={step.key} className="flex items-start gap-4 relative">
                 {index < STATUS_STEPS.length - 1 && (
-                  <div
-                    className={`absolute left-5 top-10 w-0.5 h-12 ${
-                      index < currentStepIndex ? "bg-primary" : "bg-border"
-                    }`}
-                  />
+                  <div className={`absolute left-5 top-10 w-0.5 h-12 ${index < currentStepIndex ? "bg-primary" : "bg-border"}`} />
                 )}
                 <motion.div
                   initial={{ scale: 0.8 }}
                   animate={{ scale: isCurrent ? 1.1 : 1 }}
                   className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    isCompleted
-                      ? "bg-gradient-fire text-primary-foreground"
-                      : "bg-muted text-muted-foreground"
+                    isCompleted ? "bg-gradient-fire text-primary-foreground" : "bg-muted text-muted-foreground"
                   } ${isCurrent ? "ring-4 ring-primary/30" : ""}`}
                 >
                   <Icon className="w-5 h-5" />
                 </motion.div>
                 <div className="pb-8">
-                  <p className={`font-bold font-body ${isCompleted ? "text-foreground" : "text-muted-foreground"}`}>
-                    {step.label}
-                  </p>
+                  <p className={`font-bold font-body ${isCompleted ? "text-foreground" : "text-muted-foreground"}`}>{step.label}</p>
                   <p className="text-sm text-muted-foreground font-body">{step.description}</p>
                   {isCurrent && order.status !== "delivered" && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="flex items-center gap-1 mt-1"
-                    >
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-1 mt-1">
                       <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                       <span className="text-xs text-primary font-body">In progress</span>
                     </motion.div>
@@ -237,16 +202,11 @@ const OrderTracking = () => {
         className="glass-card rounded-2xl p-6"
       >
         <h2 className="font-bold text-foreground font-body mb-4">Order Details</h2>
-
         <div className="space-y-3 mb-4">
           {items.map((item) => (
             <div key={item.id} className="flex items-center gap-3">
               {item.menu_items?.image_url && (
-                <img
-                  src={item.menu_items.image_url}
-                  alt={item.menu_items?.name}
-                  className="w-12 h-12 rounded-lg object-cover"
-                />
+                <img src={item.menu_items.image_url} alt={item.menu_items?.name} className="w-12 h-12 rounded-lg object-cover" />
               )}
               <div className="flex-1">
                 <p className="font-body font-medium text-foreground">{item.menu_items?.name}</p>
@@ -256,7 +216,6 @@ const OrderTracking = () => {
             </div>
           ))}
         </div>
-
         <div className="border-t border-border pt-4 space-y-2">
           <div className="flex justify-between text-sm font-body">
             <span className="text-muted-foreground">Branch</span>
@@ -273,7 +232,6 @@ const OrderTracking = () => {
             <span className="text-primary">Rs. {order.total}</span>
           </div>
         </div>
-
         <div className="mt-6 pt-4 border-t border-border">
           <a
             href="tel:03245531819"
