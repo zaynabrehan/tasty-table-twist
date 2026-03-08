@@ -22,9 +22,9 @@ const JushhLogo = ({ size = "md", showTagline = false, className = "" }: JushhLo
   return (
     <div className={`inline-flex flex-col items-center ${className}`}>
       <span className={`${sizeMap[size]} font-display font-extrabold leading-none tracking-tight`}>
-        <span className="text-primary">Ju</span>
-        <span className="text-destructive">shh</span>
-        <span className="text-destructive">!!</span>
+        <span className="text-orange-600">Ju</span>
+        <span className="text-red-dark">shh</span>
+        <span className="text-red-dark">!!</span>
       </span>
       {showTagline && (
         <span className={`${taglineSizeMap[size]} font-body text-primary tracking-wider mt-1`}>
