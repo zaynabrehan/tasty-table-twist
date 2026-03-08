@@ -15,6 +15,7 @@ import Favorites from "@/pages/Favorites";
 import Home from "@/pages/Home";
 import MenuPage from "@/pages/MenuPage";
 import Orders from "@/pages/Orders";
+import OrderTracking from "@/pages/OrderTracking";
 import SignIn from "@/pages/signin";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
@@ -39,6 +40,7 @@ const AppLayout = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:orderId" element={<OrderTracking />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

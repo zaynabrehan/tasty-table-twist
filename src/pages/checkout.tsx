@@ -12,6 +12,7 @@ const Checkout = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [notes, setNotes] = useState("");
+  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [placing, setPlacing] = useState(false);
 
   if (!user) {
@@ -38,6 +39,10 @@ const Checkout = () => {
       toast.error("Please select a branch first.");
       return;
     }
+    if (!deliveryAddress.trim()) {
+      toast.error("Please enter your delivery address.");
+      return;
+    }
     setPlacing(true);
 
     // Create order
@@ -48,6 +53,7 @@ const Checkout = () => {
         branch: branch,
         total: cartTotal,
         notes: notes.trim() || null,
+        delivery_address: deliveryAddress.trim(),
       })
       .select()
       .single();
@@ -77,12 +83,12 @@ const Checkout = () => {
       const orderText = cart
         .map((item) => `${item.name} x${item.quantity} - Rs.${item.price * item.quantity}`)
         .join("\n");
-      const whatsappMessage = `🛒 *New Order!*\n\n${orderText}\n\n💰 *Total: Rs.${cartTotal}*\n📍 *Branch:* ${branch}\n📝 *Notes:* ${notes.trim() || "None"}\n\n📦 Order ID: ${order.id}`;
+      const whatsappMessage = `🛒 *New Order!*\n\n${orderText}\n\n💰 *Total: Rs.${cartTotal}*\n📍 *Branch:* ${branch}\n🏠 *Address:* ${deliveryAddress.trim()}\n📝 *Notes:* ${notes.trim() || "None"}\n\n📦 Order ID: ${order.id}`;
       const whatsappUrl = `https://wa.me/923245531819?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, "_blank");
 
       clearCart();
-      navigate("/orders");
+      navigate(`/orders/${order.id}`);
     }
     setPlacing(false);
   };
@@ -128,13 +134,25 @@ const Checkout = () => {
       </div>
 
       <div className="mt-6">
+        <label className="text-sm text-muted-foreground font-body mb-1.5 block">Delivery Address *</label>
+        <textarea
+          value={deliveryAddress}
+          onChange={(e) => setDeliveryAddress(e.target.value)}
+          placeholder="Enter your full delivery address..."
+          className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-foreground font-body placeholder:text-muted-foreground outline-none focus:border-primary focus:shadow-fire transition-all resize-none"
+          rows={2}
+          maxLength={300}
+        />
+      </div>
+
+      <div className="mt-4">
         <label className="text-sm text-muted-foreground font-body mb-1.5 block">Order Notes (optional)</label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Any special instructions..."
           className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-foreground font-body placeholder:text-muted-foreground outline-none focus:border-primary focus:shadow-fire transition-all resize-none"
-          rows={3}
+          rows={2}
           maxLength={500}
         />
       </div>

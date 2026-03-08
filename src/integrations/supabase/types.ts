@@ -126,6 +126,8 @@ export type Database = {
         Row: {
           branch: string
           created_at: string
+          delivery_address: string | null
+          estimated_delivery: string | null
           id: string
           notes: string | null
           status: string
@@ -136,6 +138,8 @@ export type Database = {
         Insert: {
           branch: string
           created_at?: string
+          delivery_address?: string | null
+          estimated_delivery?: string | null
           id?: string
           notes?: string | null
           status?: string
@@ -146,6 +150,8 @@ export type Database = {
         Update: {
           branch?: string
           created_at?: string
+          delivery_address?: string | null
+          estimated_delivery?: string | null
           id?: string
           notes?: string | null
           status?: string
