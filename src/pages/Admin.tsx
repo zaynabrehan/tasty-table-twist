@@ -53,6 +53,44 @@ const Admin = () => {
   const [formCategory, setFormCategory] = useState("");
   const [formImage, setFormImage] = useState("");
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [editingImageId, setEditingImageId] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const editFileInputRef = useRef<HTMLInputElement>(null);
+
+  const uploadImage = async (file: File): Promise<string | null> => {
+    const ext = file.name.split(".").pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error } = await supabase.storage.from("menu-images").upload(fileName, file);
+    if (error) {
+      toast.error("Image upload failed");
+      return null;
+    }
+    const { data: urlData } = supabase.storage.from("menu-images").getPublicUrl(fileName);
+    return urlData.publicUrl;
+  };
+
+  const handleFormImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const url = await uploadImage(file);
+    if (url) setFormImage(url);
+    setUploading(false);
+  };
+
+  const handleEditImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, itemId: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setEditingImageId(itemId);
+    const url = await uploadImage(file);
+    if (url) {
+      const { error } = await supabase.from("menu_items").update({ image_url: url }).eq("id", itemId);
+      if (error) toast.error("Failed to update image");
+      else { toast.success("Image updated!"); fetchData(); }
+    }
+    setEditingImageId(null);
+  };
 
   const fetchData = async () => {
     setLoading(true);
