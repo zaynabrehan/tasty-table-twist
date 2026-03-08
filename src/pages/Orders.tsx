@@ -1,7 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { Clock, Package } from "lucide-react";
+import { Clock, MapPin, Package } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -11,6 +11,7 @@ interface Order {
   status: string;
   total: number;
   notes: string | null;
+  delivery_address: string | null;
   created_at: string;
 }
 
@@ -18,8 +19,18 @@ const statusColors: Record<string, string> = {
   pending: "bg-orange-soft/20 text-primary",
   confirmed: "bg-primary/20 text-primary",
   preparing: "bg-accent/20 text-accent",
+  rider_picked: "bg-blue-500/20 text-blue-400",
   delivered: "bg-green-500/20 text-green-400",
   cancelled: "bg-destructive/20 text-destructive",
+};
+
+const statusLabels: Record<string, string> = {
+  pending: "Pending",
+  confirmed: "Confirmed",
+  preparing: "Preparing",
+  rider_picked: "On the Way",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
 };
 
 const Orders = () => {
@@ -71,39 +82,45 @@ const Orders = () => {
       ) : (
         <div className="space-y-4">
           {orders.map((order, i) => (
-            <motion.div
-              key={order.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="glass-card rounded-xl p-5"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="font-body font-bold text-foreground">Order #{order.id.slice(0, 8)}</p>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground font-body mt-1">
-                    <Clock className="w-3 h-3" />
-                    {new Date(order.created_at).toLocaleDateString("en-PK", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+            <Link to={`/orders/${order.id}`} key={order.id}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="glass-card rounded-xl p-5 hover:border-primary/30 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <p className="font-body font-bold text-foreground">Order #{order.id.slice(0, 8)}</p>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground font-body mt-1">
+                      <Clock className="w-3 h-3" />
+                      {new Date(order.created_at).toLocaleDateString("en-PK", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </div>
                   </div>
+                  <span className={`px-3 py-1 rounded-full text-xs font-bold font-body capitalize ${statusColors[order.status] || "bg-muted text-muted-foreground"}`}>
+                    {statusLabels[order.status] || order.status}
+                  </span>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-bold font-body capitalize ${statusColors[order.status] || "bg-muted text-muted-foreground"}`}>
-                  {order.status}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground font-body">{order.branch}</p>
-                <p className="font-bold text-primary font-body">Rs. {order.total}</p>
-              </div>
-              {order.notes && (
-                <p className="text-xs text-muted-foreground font-body mt-2 italic">Note: {order.notes}</p>
-              )}
-            </motion.div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground font-body">
+                    <MapPin className="w-3 h-3" />
+                    {order.branch}
+                  </div>
+                  <p className="font-bold text-primary font-body">Rs. {order.total}</p>
+                </div>
+                {order.status !== "delivered" && order.status !== "cancelled" && (
+                  <div className="mt-3 pt-3 border-t border-border">
+                    <span className="text-xs text-primary font-bold font-body">Track Order →</span>
+                  </div>
+                )}
+              </motion.div>
+            </Link>
           ))}
         </div>
       )}
