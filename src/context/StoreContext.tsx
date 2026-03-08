@@ -29,7 +29,6 @@ interface StoreContextType {
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
 
-  // ✅ New properties for CartPanel
   isCartOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
@@ -41,8 +40,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [branch, setBranch] = useState<string | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
-
-  // ✅ Cart panel state
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const openCart = () => setIsCartOpen(true);
@@ -52,13 +49,11 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
     setCart((prev) => {
       const existing = prev.find((c) => c.id === item.id);
       if (existing) {
-        return prev.map((c) =>
-          c.id === item.id ? { ...c, quantity: c.quantity + 1 } : c
-        );
+        return prev.map((c) => (c.id === item.id ? { ...c, quantity: c.quantity + 1 } : c));
       }
       return [...prev, { ...item, quantity: 1 }];
     });
-    setIsCartOpen(true); // ✅ open cart panel automatically
+    setIsCartOpen(true);
   };
 
   const removeFromCart = (id: string) => {
@@ -79,9 +74,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const toggleFavorite = (id: string) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
-    );
+    setFavorites((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]));
   };
 
   const isFavorite = (id: string) => favorites.includes(id);
@@ -91,7 +84,6 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       value={{
         branch,
         setBranch,
-
         cart,
         addToCart,
         removeFromCart,
@@ -99,14 +91,12 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         clearCart,
         cartTotal,
         cartCount,
-
         favorites,
         toggleFavorite,
         isFavorite,
-
-        isCartOpen, // ✅ new
-        openCart,   // ✅ new
-        closeCart,  // ✅ new
+        isCartOpen,
+        openCart,
+        closeCart,
       }}
     >
       {children}

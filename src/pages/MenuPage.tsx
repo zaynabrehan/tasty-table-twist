@@ -1,8 +1,11 @@
-import { useState, useMemo } from "react";
-import { Search } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Tables } from "@/integrations/supabase/types";
+import { useState, useMemo, useEffect } from "react";
+import { Search, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import FoodCard from "@/components/FoodCard";
-import { menuItems, categories } from "@/data/menu";
+
+type MenuItem = Tables<"menu_items">;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -10,8 +13,29 @@ const fadeUp = {
 };
 
 const MenuPage = () => {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [categories, setCategories] = useState<string[]>(["All"]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      const { data } = await supabase
+        .from("menu_items")
+        .select("*")
+        .eq("is_available", true)
+        .order("category")
+        .order("name");
+      if (data) {
+        setMenuItems(data);
+        const cats = ["All", ...new Set(data.map((i) => i.category))];
+        setCategories(cats);
+      }
+      setLoading(false);
+    };
+    fetchMenu();
+  }, []);
 
   const filtered = useMemo(() => {
     let items = menuItems;
@@ -23,15 +47,14 @@ const MenuPage = () => {
       items = items.filter(
         (i) =>
           i.name.toLowerCase().includes(q) ||
-          i.description.toLowerCase().includes(q)
+          (i.description && i.description.toLowerCase().includes(q))
       );
     }
     return items;
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, menuItems]);
 
   return (
     <div className="container mx-auto px-4 py-10">
-      {/* Header */}
       <motion.div initial="hidden" animate="visible" variants={fadeUp} className="text-center mb-10">
         <h1 className="text-4xl font-display font-bold text-foreground mb-2">
           Our <span className="text-gradient-fire">Menu</span>
@@ -73,7 +96,11 @@ const MenuPage = () => {
       </div>
 
       {/* Grid */}
-      {filtered.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
+        </div>
+      ) : filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map((item, i) => (
             <motion.div
