@@ -58,6 +58,7 @@ export default {
         },
         orange: {
           DEFAULT: "#FFA500",
+          dark: "#CC7A00",
           light: "#FFB733",
           soft: "#FFD699",
         },
