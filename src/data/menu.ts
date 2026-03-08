@@ -1,25 +1,56 @@
 import { MenuItem } from "@/context/StoreContext";
 
-import foodDonerFries from "@/assets/food-doner-fries.jpg";
+/* DONER FRIES IMAGES */
+import beefDonerFriesImage from "@/assets/beeffries.jpg";
+import chickenDonerFriesImage from "@/assets/chickenfries.jpg";
+
+import foodShawayaRice from "@/assets/abc.jpg";
+import foodTurkishDonerBeef from "@/assets/beefdoner2.jpg";
+import foodTurkishWrapBeef from "@/assets/beefwrap2.jpg";
+import foodTurkishDonerChicken from "@/assets/chickendoner2.jpg";
+import foodTurkishWrapChicken from "@/assets/chickenwrap.jpg";
+
+import foodPouchShawarmaBeef from "@/assets/beefpouch.jpg";
+import foodPouchShawarmaChicken from "@/assets/chickenpouch.jpg";
+
+import foodShawarmaBeef from "@/assets/beefshawarma.jpg";
+import foodShawarmaChicken from "@/assets/chickenshawarma.jpg";
+
+import greenAppleMojitoImage from "@/assets/apple.jpg";
+import blueberryMojitoImage from "@/assets/blue.jpg";
+
+import lemonMojitoImage from "@/assets/lemon.jpg";
+import peachMojitoImage from "@/assets/peach3.jpg";
+import softDrinkImage from "@/assets/soft.jpg";
+import strawberryMojitoImage from "@/assets/straw.jpg";
+import waterImage from "@/assets/water.jpg";
+
+import foodShawarmaPlatterCheese from "@/assets/chplattercheese.jpg";
 import foodShawaya from "@/assets/food-shawaya.jpg";
-import foodShawarmaPlatter from "@/assets/food-shawarma-platter.jpg";
-import foodTurkishWrap from "@/assets/food-turkish-wrap.jpg";
-import foodTurkishDoner from "@/assets/food-turkish-doner.jpg";
-import foodPouchShawarma from "@/assets/food-pouch-shawarma.jpg";
-import foodShawarma from "@/assets/food-shawarma.jpg";
-import foodBeverages from "@/assets/food-beverages.jpg";
-import foodDessert from "@/assets/food-dessert.jpg";
-import foodAddons from "@/assets/food-addons.jpg";
+import foodShawarmaPlatterSimple from "@/assets/simpleplatter.jpg";
+
+/* Dessert Images */
+import lotusDessert from "@/assets/lotus.jpg";
+import nutellaDessert from "@/assets/nutella.jpg";
+import redVelvetDessert from "@/assets/redvelvet.jpg";
+
+/* Add-ons */
+import extraCheeseImage from "@/assets/cheese.jpg";
+import dipImage from "@/assets/dipsauce.jpg";
+import pitaBreadImage from "@/assets/pita2.jpg";
+import plainFriesImage from "@/assets/plainfries.jpg";
+import tortillaBreadImage from "@/assets/tor.jpg";
 
 export const menuItems: MenuItem[] = [
+
   // Doner Fries
   {
     id: "1",
     name: "Doner Fries – Chicken",
     description: "Crispy fries loaded with seasoned chicken doner, drizzled with signature sauces",
-    price: 650,
+    price: 600,
     category: "Doner Fries",
-    image: foodDonerFries,
+    image: chickenDonerFriesImage,
   },
   {
     id: "2",
@@ -27,14 +58,15 @@ export const menuItems: MenuItem[] = [
     description: "Crispy fries topped with juicy beef doner and our special sauce blend",
     price: 750,
     category: "Doner Fries",
-    image: foodDonerFries,
+    image: beefDonerFriesImage,
   },
+
   // Dubai Shawaya
   {
     id: "3",
     name: "Half Shawaya",
     description: "Half portion of our signature Dubai-style rotisserie chicken, marinated and grilled",
-    price: 950,
+    price: 1400,
     category: "Dubai Shawaya",
     image: foodShawaya,
   },
@@ -42,225 +74,241 @@ export const menuItems: MenuItem[] = [
     id: "4",
     name: "Full Shawaya",
     description: "Full Dubai-style rotisserie chicken, perfectly marinated and slow-grilled",
-    price: 1700,
+    price: 2500,
     category: "Dubai Shawaya",
     image: foodShawaya,
   },
   {
     id: "5",
-    name: "Shawaya + Rice",
+    name: "Half Shawaya + Rice",
     description: "Half shawaya served with a generous portion of flavored rice",
-    price: 1200,
+    price: 1600,
     category: "Dubai Shawaya",
-    image: foodShawaya,
+    image: foodShawayaRice,
   },
-  // Shawarma Platter
   {
     id: "6",
-    name: "Shawarma Platter – Simple",
-    description: "Generous shawarma platter with sliced meat, pickles, garlic sauce, and flatbread",
-    price: 850,
-    category: "Shawarma Platter",
-    image: foodShawarmaPlatter,
+    name: "Full Shawaya + Rice",
+    description: "Full shawaya served with a large portion of flavored rice",
+    price: 2700,
+    category: "Dubai Shawaya",
+    image: foodShawayaRice,
   },
+
+  // Shawarma Platter
   {
     id: "7",
-    name: "Shawarma Platter – With Cheese",
-    description: "Our signature shawarma platter topped with melted cheese and sauces",
-    price: 950,
+    name: "CH Platter",
+    description: "Generous shawarma platter with sliced meat, pickles, garlic sauce, and flatbread",
+    price: 900,
     category: "Shawarma Platter",
-    image: foodShawarmaPlatter,
+    image: foodShawarmaPlatterSimple,
   },
-  // Turkish Wraps
   {
     id: "8",
-    name: "Turkish Wrap – Chicken",
-    description: "Grilled chicken wrapped in warm Turkish flatbread with fresh veggies and sauce",
-    price: 550,
-    category: "Turkish Wraps",
-    image: foodTurkishWrap,
+    name: "CH Platter – With Cheese",
+    description: "Our signature shawarma platter topped with melted cheese and sauces",
+    price: 1000,
+    category: "Shawarma Platter",
+    image: foodShawarmaPlatterCheese,
   },
+
+  // Turkish Wraps
   {
     id: "9",
-    name: "Turkish Wrap – Beef",
-    description: "Tender beef wrapped in Turkish flatbread with fresh vegetables and garlic sauce",
-    price: 650,
+    name: "Turkish Wrap – Chicken",
+    description: "Grilled chicken wrapped in warm Turkish flatbread with fresh veggies and sauce",
+    price: 600,
     category: "Turkish Wraps",
-    image: foodTurkishWrap,
+    image: foodTurkishWrapChicken,
   },
-  // Turkish Doner
   {
     id: "10",
-    name: "Turkish Doner – Chicken",
-    description: "Classic Turkish doner sandwich with seasoned chicken, veggies, and sauce",
-    price: 500,
-    category: "Turkish Doner",
-    image: foodTurkishDoner,
+    name: "Turkish Wrap – Beef",
+    description: "Tender beef wrapped in Turkish flatbread with fresh vegetables and garlic sauce",
+    price: 900,
+    category: "Turkish Wraps",
+    image: foodTurkishWrapBeef,
   },
+
+  // Turkish Doner
   {
     id: "11",
-    name: "Turkish Doner – Beef",
-    description: "Authentic Turkish doner with juicy beef, fresh toppings, and signature sauce",
-    price: 600,
+    name: "Turkish Doner – Chicken",
+    description: "Classic Turkish doner sandwich with seasoned chicken, veggies, and sauce",
+    price: 850,
     category: "Turkish Doner",
-    image: foodTurkishDoner,
+    image: foodTurkishDonerChicken,
   },
-  // Pouch Shawarma
   {
     id: "12",
+    name: "Turkish Doner – Beef",
+    description: "Authentic Turkish doner with juicy beef, fresh toppings, and signature sauce",
+    price: 1100,
+    category: "Turkish Doner",
+    image: foodTurkishDonerBeef,
+  },
+
+  // Pouch Shawarma
+  {
+    id: "13",
     name: "Pouch Shawarma – Chicken",
     description: "Chicken shawarma wrapped in a crispy pouch with garlic sauce and pickles",
     price: 450,
     category: "Pouch Shawarma",
-    image: foodPouchShawarma,
+    image: foodPouchShawarmaChicken,
   },
-  {
-    id: "13",
-    name: "Pouch Shawarma – Beef",
-    description: "Beef shawarma in a crispy pouch with our special sauce blend",
-    price: 550,
-    category: "Pouch Shawarma",
-    image: foodPouchShawarma,
-  },
-  // Shawarma
   {
     id: "14",
-    name: "Shawarma – Chicken",
-    description: "Classic chicken shawarma wrap with garlic sauce, pickles, and fresh veggies",
-    price: 400,
-    category: "Shawarma",
-    image: foodShawarma,
+    name: "Pouch Shawarma – Beef",
+    description: "Beef shawarma in a crispy pouch with our special sauce blend",
+    price: 700,
+    category: "Pouch Shawarma",
+    image: foodPouchShawarmaBeef,
   },
+
+  // Shawarma
   {
     id: "15",
-    name: "Shawarma – Beef",
-    description: "Premium beef shawarma wrap with signature sauces and fresh toppings",
-    price: 500,
+    name: "Shawarma – Chicken",
+    description: "Classic chicken shawarma wrap with garlic sauce, pickles, and fresh veggies",
+    price: 550,
     category: "Shawarma",
-    image: foodShawarma,
+    image: foodShawarmaChicken,
   },
-  // Beverages
   {
     id: "16",
-    name: "Water",
-    description: "Mineral water bottle",
-    price: 100,
-    category: "Beverages",
-    image: foodBeverages,
+    name: "Shawarma – Beef",
+    description: "Premium beef shawarma wrap with signature sauces and fresh toppings",
+    price: 750,
+    category: "Shawarma",
+    image: foodShawarmaBeef,
   },
+
+  // Beverages
   {
     id: "17",
+    name: "Water",
+    description: "Mineral water bottle",
+    price: 80,
+    category: "Beverages",
+    image: waterImage,
+  },
+  {
+    id: "18",
     name: "Soft Drink",
     description: "Chilled carbonated soft drink",
     price: 150,
     category: "Beverages",
-    image: foodBeverages,
-  },
-  {
-    id: "18",
-    name: "Blueberry Mojito",
-    description: "Refreshing blueberry flavored mojito with crushed ice",
-    price: 350,
-    category: "Beverages",
-    image: foodBeverages,
+    image: softDrinkImage,
   },
   {
     id: "19",
-    name: "Strawberry Mojito",
-    description: "Sweet strawberry mojito with fresh mint and crushed ice",
-    price: 350,
+    name: "Blueberry Mojito",
+    description: "Refreshing blueberry flavored mojito with crushed ice",
+    price: 290,
     category: "Beverages",
-    image: foodBeverages,
+    image: blueberryMojitoImage,
   },
   {
     id: "20",
-    name: "Green Apple Mojito",
-    description: "Tangy green apple mojito with a refreshing twist",
-    price: 350,
+    name: "Strawberry Mojito",
+    description: "Sweet strawberry mojito with fresh mint and crushed ice",
+    price: 290,
     category: "Beverages",
-    image: foodBeverages,
+    image: strawberryMojitoImage,
   },
   {
     id: "21",
-    name: "Peach Mojito",
-    description: "Smooth peach flavored mojito, perfectly chilled",
-    price: 350,
+    name: "Green Apple Mojito",
+    description: "Tangy green apple mojito with a refreshing twist",
+    price: 290,
     category: "Beverages",
-    image: foodBeverages,
+    image: greenAppleMojitoImage,
   },
   {
     id: "22",
-    name: "Lemon Mojito",
-    description: "Classic lemon mojito with fresh mint leaves and ice",
-    price: 350,
+    name: "Peach Mojito",
+    description: "Smooth peach flavored mojito, perfectly chilled",
+    price: 290,
     category: "Beverages",
-    image: foodBeverages,
+    image: peachMojitoImage,
   },
-  // Jushhpk Desserts
   {
     id: "23",
-    name: "Lotus Can",
-    description: "Layered lotus biscoff cream dessert in a can, topped with crushed biscuits",
-    price: 450,
-    category: "Jushhpk Desserts",
-    image: foodDessert,
+    name: "Lemon Mojito",
+    description: "Classic lemon mojito with fresh mint leaves and ice",
+    price: 290,
+    category: "Beverages",
+    image: lemonMojitoImage,
   },
+
+  // Desserts
   {
     id: "24",
-    name: "Red Velvet Can",
-    description: "Rich red velvet cream dessert layered in a can with cream cheese frosting",
-    price: 450,
+    name: "Lotus Can",
+    description: "Layered lotus biscoff cream dessert in a can, topped with crushed biscuits",
+    price: 1000,
     category: "Jushhpk Desserts",
-    image: foodDessert,
+    image: lotusDessert,
   },
   {
     id: "25",
-    name: "Nutella Can",
-    description: "Indulgent Nutella cream dessert in a can with hazelnut crumble",
-    price: 450,
+    name: "Red Velvet Can",
+    description: "Rich red velvet cream dessert layered in a can with cream cheese frosting",
+    price: 1000,
     category: "Jushhpk Desserts",
-    image: foodDessert,
+    image: redVelvetDessert,
   },
-  // Add-ons
   {
     id: "26",
-    name: "Extra Cheese",
-    description: "Add a generous portion of melted cheese to any item",
-    price: 150,
-    category: "Add-ons",
-    image: foodAddons,
+    name: "Nutella Can",
+    description: "Indulgent Nutella cream dessert in a can with hazelnut crumble",
+    price: 1000,
+    category: "Jushhpk Desserts",
+    image: nutellaDessert,
   },
+
+  // Add-ons
   {
     id: "27",
-    name: "Dip",
-    description: "Choice of garlic, chili, or signature dipping sauce",
-    price: 100,
+    name: "Extra Cheese",
+    description: "Add a generous portion of melted cheese to any item",
+    price: 90,
     category: "Add-ons",
-    image: foodAddons,
+    image: extraCheeseImage,
   },
   {
     id: "28",
-    name: "Tortilla Bread",
-    description: "Warm soft tortilla bread on the side",
-    price: 100,
+    name: "Dip",
+    description: "Choice of garlic, chili, or signature dipping sauce",
+    price: 90,
     category: "Add-ons",
-    image: foodAddons,
+    image: dipImage,
   },
   {
     id: "29",
-    name: "Pita Bread",
-    description: "Fresh baked pita bread, warm and fluffy",
-    price: 100,
+    name: "Tortilla Bread",
+    description: "Warm soft tortilla bread on the side",
+    price: 90,
     category: "Add-ons",
-    image: foodAddons,
+    image: tortillaBreadImage,
   },
   {
     id: "30",
+    name: "Pita Bread",
+    description: "Fresh baked pita bread, warm and fluffy",
+    price: 60,
+    category: "Add-ons",
+    image: pitaBreadImage,
+  },
+  {
+    id: "31",
     name: "Plain Fries",
     description: "Golden crispy plain french fries",
-    price: 250,
+    price: 150,
     category: "Add-ons",
-    image: foodAddons,
+    image: plainFriesImage,
   },
 ];
 

@@ -1,18 +1,29 @@
-import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Minus, Plus, ShoppingBag, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-interface CartPanelProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+const CartPanel = () => {
+  const {
+    cart,
+    updateQuantity,
+    removeFromCart,
+    cartTotal,
+    clearCart,
+    isCartOpen,
+    closeCart,
+  } = useStore();
 
-const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
-  const { cart, updateQuantity, removeFromCart, cartTotal, clearCart } = useStore();
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    navigate("/checkout");
+    closeCart(); // close panel after navigating
+  };
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isCartOpen && (
         <>
           {/* Overlay */}
           <motion.div
@@ -20,7 +31,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm"
-            onClick={onClose}
+            onClick={closeCart}
           />
 
           {/* Panel */}
@@ -34,7 +45,11 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-border">
               <h2 className="text-xl font-display font-bold text-foreground">Your Cart</h2>
-              <button onClick={onClose} className="p-2 text-muted-foreground hover:text-foreground transition-colors">
+              <button
+                aria-label="Close cart"
+                onClick={closeCart}
+                className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -71,6 +86,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                       </p>
                       <div className="flex items-center gap-2 mt-2">
                         <button
+                          aria-label="Decrease quantity"
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
                           className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                         >
@@ -80,6 +96,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                           {item.quantity}
                         </span>
                         <button
+                          aria-label="Increase quantity"
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
                           className="w-6 h-6 rounded-full bg-gradient-fire text-primary-foreground flex items-center justify-center hover:shadow-fire transition-shadow"
                         >
@@ -88,6 +105,7 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                       </div>
                     </div>
                     <button
+                      aria-label="Remove item"
                       onClick={() => removeFromCart(item.id)}
                       className="text-muted-foreground hover:text-destructive transition-colors self-start"
                     >
@@ -104,10 +122,13 @@ const CartPanel = ({ isOpen, onClose }: CartPanelProps) => {
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
                   <span className="text-lg font-display font-bold text-foreground">
-                    Rs. {cartTotal.toLocaleString()}
+                    Rs. {cartTotal || 0}
                   </span>
                 </div>
-                <button className="w-full py-3 bg-gradient-fire text-primary-foreground font-bold rounded-xl hover:shadow-fire hover:scale-[1.02] transition-all font-body">
+                <button
+                  onClick={handleCheckout}
+                  className="w-full py-3 bg-gradient-fire text-primary-foreground font-bold rounded-xl hover:shadow-fire hover:scale-[1.02] transition-all font-body"
+                >
                   Proceed to Checkout
                 </button>
                 <button

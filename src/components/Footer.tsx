@@ -1,5 +1,5 @@
+import { Clock, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Phone, Clock, MapPin } from "lucide-react";
 import JushhLogo from "./JushhLogo";
 
 const Footer = () => {
@@ -11,7 +11,7 @@ const Footer = () => {
           <div>
             <JushhLogo size="md" showTagline />
             <p className="text-sm text-muted-foreground font-body leading-relaxed">
-              Experience the finest Pakistani & Turkish cuisine with bold flavors and warm hospitality.
+             YOUR VIBE, YOUR SIP, YOUR JUSHH
             </p>
           </div>
 

@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -18,61 +23,61 @@ export default {
         body: ['DM Sans', 'sans-serif'],
       },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "#FF6600",           // orange border
+        input: "#FFA500",            // orange input
+        ring: "#FF4500",             // reddish-orange focus ring
+        background: "#1A1A1A",      // dark background
+        foreground: "#FFFFFF",       // light text
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#FFA500",        // bright orange
+          foreground: "#1A1A1A",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#800000",        // blood red / maroon
+          foreground: "#FFFFFF",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "#8B0000",        // deeper blood red for errors
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#555555",
+          foreground: "#CCCCCC",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#800000",        // blood red accent
+          foreground: "#FFFFFF",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "#2F2F2F",
+          foreground: "#FFFFFF",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#2A2A2A",
+          foreground: "#FFFFFF",
         },
         orange: {
-          DEFAULT: "hsl(var(--orange))",
-          light: "hsl(var(--orange-light))",
-          soft: "hsl(var(--orange-soft))",
+          DEFAULT: "#FFA500",
+          light: "#FFB733",
+          soft: "#FFD699",
         },
         red: {
-          deep: "hsl(var(--red-deep))",
-          dark: "hsl(var(--red-dark))",
+          deep: "#800000",           // maroon
+          dark: "#8B0000",           // dark blood red
         },
         cream: {
-          DEFAULT: "hsl(var(--cream))",
-          muted: "hsl(var(--cream-muted))",
+          DEFAULT: "#FFF5E6",
+          muted: "#FFEEDD",
         },
         sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+          DEFAULT: "#1A1A1A",
+          foreground: "#FFFFFF",
+          primary: "#FFA500",
+          "primary-foreground": "#1A1A1A",
+          accent: "#800000",
+          "accent-foreground": "#FFFFFF",
+          border: "#333333",
+          ring: "#FF6600",
         },
       },
       borderRadius: {

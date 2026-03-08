@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, Flame, Star, Clock, Truck, Award, Quote, ImageIcon } from "lucide-react";
-import { motion } from "framer-motion";
+import heroFoodSpread from "@/assets/homeimage.jpg";
+import restaurantInterior from "@/assets/restaurant-interior.jpg";
 import FoodCard from "@/components/FoodCard";
 import { menuItems } from "@/data/menu";
-import heroFoodSpread from "@/assets/hero-food-spread.jpg";
-import restaurantInterior from "@/assets/restaurant-interior.jpg";
+import { motion } from "framer-motion";
+import { ArrowRight, Award, Clock, Flame, ImageIcon, Quote, Star, Truck } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -56,7 +56,7 @@ const Home = () => {
             <motion.div initial="hidden" animate="visible" className="max-w-xl">
               <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6">
                 <Flame className="w-4 h-4 text-primary" />
-                <span className="text-sm font-body text-foreground">Premium Pakistani & Turkish Cuisine</span>
+                <span className="text-sm font-body text-foreground">Premium Dubai & Turkish Cuisine</span>
               </motion.div>
 
               <motion.h1 variants={fadeUp} custom={1} className="text-5xl md:text-7xl font-display font-bold text-foreground leading-tight mb-6">
@@ -123,29 +123,32 @@ const Home = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((f, i) => (
-            <motion.div
-              key={f.title}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              custom={i}
-              className="glass-card rounded-2xl p-6 hover-lift group cursor-default"
-            >
-              <div className="flex items-start gap-4">
-                {/* Image placeholder */}
-                <ImagePlaceholder label="Feature" className="w-20 h-20 flex-shrink-0" />
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-gradient-fire flex items-center justify-center mb-3 group-hover:shadow-fire transition-shadow">
-                    <f.icon className="w-5 h-5 text-primary-foreground" />
-                  </div>
-                  <h3 className="font-display font-bold text-foreground text-lg mb-1">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground font-body">{f.desc}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+{features.map((f, i) => {
+  const Icon = f.icon; // Capitalize the icon component
+  return (
+    <motion.div
+      key={f.title}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      custom={i}
+      className="glass-card rounded-2xl p-6 hover-lift group cursor-default"
+    >
+      <div className="flex items-start gap-4">
+        {/* Icon container */}
+        <div className="w-20 h-20 flex-shrink-0 flex items-center justify-center rounded-2xl bg-gradient-fire group-hover:shadow-fire transition-shadow">
+          <Icon className="w-10 h-10 text-primary-foreground" />
+        </div>
+
+        <div>
+          <h3 className="font-display font-bold text-foreground text-lg mb-1">{f.title}</h3>
+          <p className="text-sm text-muted-foreground font-body">{f.desc}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+})}
         </div>
       </section>
 

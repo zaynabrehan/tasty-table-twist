@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 export interface MenuItem {
   id: string;
@@ -16,6 +16,7 @@ export interface CartItem extends MenuItem {
 interface StoreContextType {
   branch: string | null;
   setBranch: (branch: string | null) => void;
+
   cart: CartItem[];
   addToCart: (item: MenuItem) => void;
   removeFromCart: (id: string) => void;
@@ -23,9 +24,15 @@ interface StoreContextType {
   clearCart: () => void;
   cartTotal: number;
   cartCount: number;
+
   favorites: string[];
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
+
+  // ✅ New properties for CartPanel
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -34,6 +41,12 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [branch, setBranch] = useState<string | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
+
+  // ✅ Cart panel state
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   const addToCart = (item: MenuItem) => {
     setCart((prev) => {
@@ -45,6 +58,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       }
       return [...prev, { ...item, quantity: 1 }];
     });
+    setIsCartOpen(true); // ✅ open cart panel automatically
   };
 
   const removeFromCart = (id: string) => {
@@ -75,9 +89,24 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   return (
     <StoreContext.Provider
       value={{
-        branch, setBranch,
-        cart, addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, cartCount,
-        favorites, toggleFavorite, isFavorite,
+        branch,
+        setBranch,
+
+        cart,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        cartTotal,
+        cartCount,
+
+        favorites,
+        toggleFavorite,
+        isFavorite,
+
+        isCartOpen, // ✅ new
+        openCart,   // ✅ new
+        closeCart,  // ✅ new
       }}
     >
       {children}

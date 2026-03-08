@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Search, Heart, ShoppingCart, Phone, User, Menu, X, MapPin, Clock } from "lucide-react";
+// src/components/Navbar.tsx
+import jushhLogo from "@/assets/jushh-logo.png";
 import { useStore } from "@/context/StoreContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Clock, Heart, MapPin, Menu, Phone, ShoppingCart, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import CartPanel from "./CartPanel";
 import JushhLogo from "./JushhLogo";
-import jushhLogo from "@/assets/jushh-logo.png";
 
 const Navbar = () => {
-  const { cartCount, branch } = useStore();
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cartCount, branch, openCart } = useStore(); // ✅ global cart
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -21,11 +20,13 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Add SignIn link here in main nav
   const navLinks = [
     { to: "/home", label: "Home" },
     { to: "/menu", label: "Menu" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
+    { to: "/signin", label: "Sign In" }, // ✅ added Sign In here
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -42,14 +43,13 @@ const Navbar = () => {
             Mon–Thu: 12 PM – 2 AM &nbsp;|&nbsp; Fri–Sun: 3 PM – 2 AM
           </span>
           <div className="flex items-center gap-4">
-            <a href="tel:03269946142" className="flex items-center gap-1 text-primary hover:text-orange-light transition-colors">
+            <a
+              href="tel:03269946142"
+              className="flex items-center gap-1 text-primary hover:text-orange-light transition-colors"
+            >
               <Phone className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">0326 9946142</span>
             </a>
-            <button className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
-              <User className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Sign In</span>
-            </button>
           </div>
         </div>
       </div>
@@ -92,18 +92,6 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Search */}
-          <div className="hidden lg:flex items-center bg-secondary rounded-lg px-3 py-2 flex-1 max-w-xs border border-transparent focus-within:border-primary/30 transition-colors">
-            <Search className="w-4 h-4 text-muted-foreground mr-2" />
-            <input
-              type="text"
-              placeholder="Search menu..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none w-full font-body"
-            />
-          </div>
-
           {/* Right Actions */}
           <div className="flex items-center gap-3">
             {branch && (
@@ -120,8 +108,9 @@ const Navbar = () => {
               <Heart className="w-5 h-5" />
             </Link>
 
+            {/* Cart Button */}
             <button
-              onClick={() => setIsCartOpen(true)}
+              onClick={openCart}
               className="relative p-2 text-muted-foreground hover:text-primary transition-colors"
             >
               <ShoppingCart className="w-5 h-5" />
@@ -156,14 +145,6 @@ const Navbar = () => {
               className="md:hidden border-t border-border bg-background overflow-hidden"
             >
               <div className="container mx-auto px-4 py-4 space-y-3">
-                <div className="flex items-center bg-secondary rounded-lg px-3 py-2">
-                  <Search className="w-4 h-4 text-muted-foreground mr-2" />
-                  <input
-                    type="text"
-                    placeholder="Search menu..."
-                    className="bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none w-full font-body"
-                  />
-                </div>
                 {navLinks.map((link) => (
                   <Link
                     key={link.to}
@@ -183,7 +164,7 @@ const Navbar = () => {
       </nav>
 
       {/* Cart Panel */}
-      <CartPanel isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartPanel /> {/* ✅ Uses global CartPanel */}
     </>
   );
 };
