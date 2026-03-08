@@ -13,7 +13,7 @@ import Contact from "@/pages/Contact";
 import Favorites from "@/pages/Favorites";
 import Home from "@/pages/Home";
 import MenuPage from "@/pages/MenuPage";
-import SignIn from "@/pages/SignIn"; // ✅ import SignIn page
+import SignIn from "@/pages/signin"; // ✅ import SignIn page
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import NotFound from "./pages/NotFound";
