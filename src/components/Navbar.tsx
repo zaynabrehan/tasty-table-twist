@@ -5,6 +5,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Clock, Heart, LogOut, MapPin, Menu, Phone, Shield, ShoppingCart, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 import CartPanel from "./CartPanel";
 import JushhLogo from "./JushhLogo";
 
