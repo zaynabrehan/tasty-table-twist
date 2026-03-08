@@ -1,8 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { Check, Loader2, MessageSquare, Package, Plus, Trash2, UtensilsCrossed } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Check, Image, Loader2, MessageSquare, Package, Plus, Trash2, Upload, UtensilsCrossed } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 type Tab = "menu" | "orders" | "messages";
@@ -53,6 +53,44 @@ const Admin = () => {
   const [formCategory, setFormCategory] = useState("");
   const [formImage, setFormImage] = useState("");
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [editingImageId, setEditingImageId] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const editFileInputRef = useRef<HTMLInputElement>(null);
+
+  const uploadImage = async (file: File): Promise<string | null> => {
+    const ext = file.name.split(".").pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error } = await supabase.storage.from("menu-images").upload(fileName, file);
+    if (error) {
+      toast.error("Image upload failed");
+      return null;
+    }
+    const { data: urlData } = supabase.storage.from("menu-images").getPublicUrl(fileName);
+    return urlData.publicUrl;
+  };
+
+  const handleFormImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const url = await uploadImage(file);
+    if (url) setFormImage(url);
+    setUploading(false);
+  };
+
+  const handleEditImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, itemId: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setEditingImageId(itemId);
+    const url = await uploadImage(file);
+    if (url) {
+      const { error } = await supabase.from("menu_items").update({ image_url: url }).eq("id", itemId);
+      if (error) toast.error("Failed to update image");
+      else { toast.success("Image updated!"); fetchData(); }
+    }
+    setEditingImageId(null);
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -210,17 +248,41 @@ const Admin = () => {
                   <input value={formDesc} onChange={(e) => setFormDesc(e.target.value)} placeholder="Description" className={inputClass} maxLength={300} />
                   <input value={formPrice} onChange={(e) => setFormPrice(e.target.value)} placeholder="Price (e.g. 750)" type="number" className={inputClass} />
                   <input value={formCategory} onChange={(e) => setFormCategory(e.target.value)} placeholder="Category" className={inputClass} maxLength={50} />
-                  <input value={formImage} onChange={(e) => setFormImage(e.target.value)} placeholder="Image URL (optional)" className={inputClass} />
+                  <div className="flex items-center gap-3">
+                    <input type="file" ref={fileInputRef} accept="image/*" className="hidden" onChange={handleFormImageUpload} />
+                    <button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading} className="flex items-center gap-2 px-4 py-3 rounded-xl border border-dashed border-border bg-secondary text-muted-foreground font-body hover:border-primary hover:text-foreground transition-all disabled:opacity-50">
+                      {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                      {uploading ? "Uploading..." : "Upload Image"}
+                    </button>
+                    {formImage && <img src={formImage} alt="Preview" className="w-12 h-12 rounded-lg object-cover" />}
+                  </div>
                   <button onClick={addMenuItem} disabled={saving} className="bg-gradient-fire text-primary-foreground px-6 py-2.5 rounded-xl font-bold font-body disabled:opacity-50 flex items-center gap-2">
                     {saving && <Loader2 className="w-4 h-4 animate-spin" />} Save
                   </button>
                 </div>
               )}
 
+              <input type="file" ref={editFileInputRef} accept="image/*" className="hidden" onChange={(e) => editingImageId && handleEditImageUpload(e, editingImageId)} />
               <div className="space-y-3">
                 {menuItems.map((item) => (
-                  <div key={item.id} className="glass-card rounded-xl p-4 flex items-center justify-between">
-                    <div>
+                  <div key={item.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
+                    <div className="relative group flex-shrink-0">
+                      {item.image_url ? (
+                        <img src={item.image_url} alt={item.name} className="w-14 h-14 rounded-lg object-cover" />
+                      ) : (
+                        <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center">
+                          <Image className="w-6 h-6 text-muted-foreground" />
+                        </div>
+                      )}
+                      <button
+                        onClick={() => { setEditingImageId(item.id); editFileInputRef.current?.click(); }}
+                        disabled={editingImageId === item.id}
+                        className="absolute inset-0 bg-black/50 rounded-lg opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+                      >
+                        {editingImageId === item.id ? <Loader2 className="w-4 h-4 text-white animate-spin" /> : <Upload className="w-4 h-4 text-white" />}
+                      </button>
+                    </div>
+                    <div className="flex-1 min-w-0">
                       <p className="font-body font-bold text-foreground">{item.name}</p>
                       <p className="text-xs text-muted-foreground font-body">{item.category} • Rs. {item.price}</p>
                     </div>
