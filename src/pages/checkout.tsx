@@ -39,6 +39,10 @@ const Checkout = () => {
       toast.error("Please select a branch first.");
       return;
     }
+    if (!deliveryAddress.trim()) {
+      toast.error("Please enter your delivery address.");
+      return;
+    }
     setPlacing(true);
 
     // Create order
