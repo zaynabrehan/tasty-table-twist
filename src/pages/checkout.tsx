@@ -53,6 +53,7 @@ const Checkout = () => {
         branch: branch,
         total: cartTotal,
         notes: notes.trim() || null,
+        delivery_address: deliveryAddress.trim(),
       })
       .select()
       .single();
