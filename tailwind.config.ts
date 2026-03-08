@@ -23,62 +23,62 @@ export default {
         body: ['DM Sans', 'sans-serif'],
       },
       colors: {
-        border: "#FF6600",           // orange border
-        input: "#FFA500",            // orange input
-        ring: "#FF4500",             // reddish-orange focus ring
-        background: "#1A1A1A",      // dark background
-        foreground: "#FFFFFF",       // light text
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#FFA500",        // bright orange
-          foreground: "#1A1A1A",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "#800000",        // blood red / maroon
-          foreground: "#FFFFFF",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
-          DEFAULT: "#8B0000",        // deeper blood red for errors
-          foreground: "#FFFFFF",
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "#555555",
-          foreground: "#CCCCCC",
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "#800000",        // blood red accent
-          foreground: "#FFFFFF",
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
-          DEFAULT: "#2F2F2F",
-          foreground: "#FFFFFF",
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         card: {
-          DEFAULT: "#2A2A2A",
-          foreground: "#FFFFFF",
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
         orange: {
-          DEFAULT: "#FFA500",
-          dark: "#CC7A00",
-          light: "#FFB733",
-          soft: "#FFD699",
+          DEFAULT: "#CC7A00",
+          dark: "#A66200",
+          light: "#E68A00",
+          soft: "#FFB84D",
         },
         red: {
-          deep: "#800000",           // maroon
-          dark: "#8B0000",           // dark blood red
+          deep: "#8B1A1A",
+          dark: "#6B0000",
         },
         cream: {
-          DEFAULT: "#FFF5E6",
-          muted: "#FFEEDD",
+          DEFAULT: "#FFF0E0",
+          muted: "#FFE4CC",
         },
         sidebar: {
-          DEFAULT: "#1A1A1A",
-          foreground: "#FFFFFF",
-          primary: "#FFA500",
-          "primary-foreground": "#1A1A1A",
-          accent: "#800000",
-          "accent-foreground": "#FFFFFF",
-          border: "#333333",
-          ring: "#FF6600",
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
         },
       },
       borderRadius: {
