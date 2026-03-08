@@ -115,8 +115,16 @@ const OrderTracking = () => {
     ? new Date(order.estimated_delivery).toLocaleTimeString("en-PK", { hour: "2-digit", minute: "2-digit" })
     : "30-45 mins";
 
-  // Static map using OpenStreetMap tile
-  const staticMapUrl = `https://staticmap.openstreetmap.de/staticmap.php?center=${branchCoords[0]},${branchCoords[1]}&zoom=13&size=800x300&maptype=mapnik&markers=${branchCoords[0]},${branchCoords[1]},red-pushpin`;
+  const latDelta = 0.02;
+  const lngDelta = 0.03;
+  const bbox = [
+    branchCoords[1] - lngDelta,
+    branchCoords[0] - latDelta,
+    branchCoords[1] + lngDelta,
+    branchCoords[0] + latDelta,
+  ].join(",");
+  const embedMapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${branchCoords[0]},${branchCoords[1]}`;
+  const openMapUrl = `https://www.openstreetmap.org/?mlat=${branchCoords[0]}&mlon=${branchCoords[1]}#map=14/${branchCoords[0]}/${branchCoords[1]}`;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -137,18 +145,29 @@ const OrderTracking = () => {
         </div>
       </div>
 
-      {/* Static Map */}
+      {/* Delivery Map */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="rounded-2xl overflow-hidden shadow-card mb-6 border border-border"
       >
-        <img
-          src={staticMapUrl}
-          alt="Order delivery map"
-          className="w-full h-[300px] object-cover"
+        <iframe
+          title="Order delivery map"
+          src={embedMapUrl}
+          className="w-full h-[300px] border-0"
           loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
         />
+        <div className="px-4 py-2 bg-secondary text-right">
+          <a
+            href={openMapUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-xs font-body text-primary hover:underline"
+          >
+            Open full map
+          </a>
+        </div>
       </motion.div>
 
       {/* Status Steps */}
