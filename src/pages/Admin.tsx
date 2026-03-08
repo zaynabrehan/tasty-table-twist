@@ -1,8 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { Check, Loader2, MessageSquare, Package, Plus, Trash2, UtensilsCrossed } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Check, Image, Loader2, MessageSquare, Package, Plus, Trash2, Upload, UtensilsCrossed } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 type Tab = "menu" | "orders" | "messages";
