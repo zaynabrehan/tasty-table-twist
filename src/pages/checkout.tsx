@@ -6,6 +6,7 @@ import { Loader2, Minus, Plus, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Checkout = () => {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart, branch } = useStore();
