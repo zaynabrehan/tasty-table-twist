@@ -83,7 +83,7 @@ const Checkout = () => {
       const orderText = cart
         .map((item) => `${item.name} x${item.quantity} - Rs.${item.price * item.quantity}`)
         .join("\n");
-      const whatsappMessage = `🛒 *New Order!*\n\n${orderText}\n\n💰 *Total: Rs.${cartTotal}*\n📍 *Branch:* ${branch}\n📝 *Notes:* ${notes.trim() || "None"}\n\n📦 Order ID: ${order.id}`;
+      const whatsappMessage = `🛒 *New Order!*\n\n${orderText}\n\n💰 *Total: Rs.${cartTotal}*\n📍 *Branch:* ${branch}\n🏠 *Address:* ${deliveryAddress.trim()}\n📝 *Notes:* ${notes.trim() || "None"}\n\n📦 Order ID: ${order.id}`;
       const whatsappUrl = `https://wa.me/923245531819?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, "_blank");
 
