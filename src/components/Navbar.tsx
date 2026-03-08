@@ -127,7 +127,7 @@ const Navbar = () => {
                     <Shield className="w-5 h-5" />
                   </Link>
                 )}
-                <button onClick={handleSignOut} className="p-2 text-muted-foreground hover:text-destructive transition-colors" title="Sign out">
+                <button onClick={() => setShowLogoutDialog(true)} className="p-2 text-muted-foreground hover:text-destructive transition-colors" title="Sign out">
                   <LogOut className="w-5 h-5" />
                 </button>
               </div>
