@@ -229,16 +229,10 @@ const Admin = () => {
     fetchData();
   };
 
-  const markRead = async (_id: string) => {};
-    await supabase.from("contact_messages").update({ is_read: true }).eq("id", id);
-    fetchData();
-  };
-
   const tabs = [
     { key: "dashboard" as Tab, label: "Dashboard", icon: BarChart3 },
     { key: "orders" as Tab, label: "Orders", icon: Package, badge: stats.pendingOrders },
     { key: "menu" as Tab, label: "Menu", icon: UtensilsCrossed },
-    { key: "messages" as Tab, label: "Messages", icon: MessageSquare, badge: stats.unreadMessages },
   ];
 
   const inputClass = "w-full bg-secondary border border-border rounded-xl px-4 py-3 text-foreground font-body placeholder:text-muted-foreground outline-none focus:border-primary focus:shadow-fire transition-all";
