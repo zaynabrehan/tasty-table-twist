@@ -39,15 +39,6 @@ interface OrderItemRow {
   menu_items: { name: string; image_url: string | null } | null;
 }
 
-interface MessageRow {
-  id: string;
-  name: string;
-  email: string;
-  phone: string | null;
-  message: string;
-  is_read: boolean;
-  created_at: string;
-}
 
 const STATUS_FLOW = ["pending", "confirmed", "preparing", "rider_picked", "delivered"];
 const STATUS_LABELS: Record<string, string> = {

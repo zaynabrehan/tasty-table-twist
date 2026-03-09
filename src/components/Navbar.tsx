@@ -39,7 +39,7 @@ const Navbar = () => {
     { to: "/menu", label: "Menu" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
-    ...(user ? [{ to: "/orders", label: "Orders" }] : []),
+    ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
 
