@@ -333,17 +333,6 @@ const Admin = () => {
                 )}
               </div>
 
-              {/* Unread messages */}
-              {stats.unreadMessages > 0 && (
-                <div className="glass-card rounded-2xl p-6">
-                  <h2 className="font-bold text-foreground font-body mb-2 flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4 text-primary" /> {stats.unreadMessages} Unread Message{stats.unreadMessages > 1 ? "s" : ""}
-                  </h2>
-                  <button onClick={() => setTab("messages")} className="text-sm text-primary font-body font-bold hover:underline">
-                    View Messages →
-                  </button>
-                </div>
-              )}
             </div>
           )}
 
