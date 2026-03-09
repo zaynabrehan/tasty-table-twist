@@ -130,14 +130,12 @@ const Admin = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const [menuRes, ordersRes, messagesRes] = await Promise.all([
+    const [menuRes, ordersRes] = await Promise.all([
       supabase.from("menu_items").select("*").order("category").order("name"),
       supabase.from("orders").select("*").order("created_at", { ascending: false }),
-      supabase.from("contact_messages").select("*").order("created_at", { ascending: false }),
     ]);
     setMenuItems(menuRes.data || []);
     setOrders(ordersRes.data || []);
-    setMessages(messagesRes.data || []);
     setLoading(false);
   };
 
