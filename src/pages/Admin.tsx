@@ -2,9 +2,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Check, ChevronDown, ChevronRight, Clock, Image, Loader2,
-  MessageSquare, Package, Plus, RefreshCw, Trash2, Upload,
-  UtensilsCrossed, X, BarChart3, MapPin, Phone, FileText, Eye,
+  ChevronDown, ChevronRight, Clock, Image, Loader2,
+  Package, Plus, RefreshCw, Trash2, Upload,
+  UtensilsCrossed, X, BarChart3, MapPin, FileText,
 } from "lucide-react";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { toast } from "sonner";
