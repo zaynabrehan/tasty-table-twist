@@ -568,34 +568,6 @@ const Admin = () => {
             </div>
           )}
 
-          {/* ============ MESSAGES ============ */}
-          {tab === "messages" && (
-            <div className="space-y-4">
-              {messages.length === 0 ? (
-                <p className="text-muted-foreground font-body text-center py-10">No messages yet.</p>
-              ) : messages.map((m) => (
-                <motion.div key={m.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={`glass-card rounded-2xl p-5 ${!m.is_read ? "border border-primary/30" : ""}`}>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <p className="font-body font-bold text-foreground">{m.name}</p>
-                      {!m.is_read && <span className="w-2 h-2 rounded-full bg-primary" />}
-                    </div>
-                    <span className="text-xs text-muted-foreground font-body">{new Date(m.created_at).toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground font-body mb-2">
-                    <span>{m.email}</span>
-                    {m.phone && <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> {m.phone}</span>}
-                  </div>
-                  <p className="text-foreground font-body">{m.message}</p>
-                  {!m.is_read && (
-                    <button onClick={() => markRead(m.id)} className="mt-3 flex items-center gap-1 text-xs text-primary font-body font-bold hover:underline">
-                      <Check className="w-3 h-3" /> Mark as read
-                    </button>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          )}
         </>
       )}
     </div>
