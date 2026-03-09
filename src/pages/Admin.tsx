@@ -229,7 +229,7 @@ const Admin = () => {
     fetchData();
   };
 
-  const markRead = async (id: string) => {
+  const markRead = async (_id: string) => {};
     await supabase.from("contact_messages").update({ is_read: true }).eq("id", id);
     fetchData();
   };
