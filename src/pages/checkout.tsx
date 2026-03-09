@@ -88,8 +88,9 @@ const Checkout = () => {
       const whatsappUrl = `https://wa.me/923245531819?text=${encodeURIComponent(whatsappMessage)}`;
       
       clearCart();
-      // Use location.assign instead of window.open to avoid popup blockers
-      window.location.assign(whatsappUrl);
+      // Open WhatsApp in a new tab
+      window.open(whatsappUrl, "_blank");
+      navigate("/orders");
     }
     setPlacing(false);
   };
