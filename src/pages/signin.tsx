@@ -14,10 +14,9 @@ const SignIn = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  if (user) {
-    navigate("/home");
-    return null;
-  }
+  useEffect(() => {
+    if (user) navigate("/home");
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
