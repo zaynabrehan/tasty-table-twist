@@ -40,7 +40,6 @@ const Navbar = () => {
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
     ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
-    ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
   ];
 
   const isActive = (path: string) => location.pathname === path;
