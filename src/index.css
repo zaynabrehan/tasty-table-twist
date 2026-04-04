@@ -6,14 +6,13 @@
 
 @layer base {
   :root {
-    /* 🔥 MAROON THEME */
-    --background: 355 70% 12%;
+    --background: 0 0% 6%;
     --foreground: 30 20% 95%;
 
-    --card: 355 60% 14%;
+    --card: 0 0% 9%;
     --card-foreground: 30 20% 95%;
 
-    --popover: 355 60% 13%;
+    --popover: 0 0% 8%;
     --popover-foreground: 30 20% 95%;
 
     --primary: 30 90% 45%;
@@ -22,8 +21,8 @@
     --secondary: 355 75% 30%;
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 355 40% 18%;
-    --muted-foreground: 30 10% 65%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 30 10% 55%;
 
     --accent: 355 80% 35%;
     --accent-foreground: 0 0% 100%;
@@ -31,42 +30,41 @@
     --destructive: 355 80% 35%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 355 30% 18%;
-    --input: 355 30% 18%;
+    --border: 30 20% 14%;
+    --input: 30 10% 14%;
     --ring: 30 90% 45%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 355 70% 10%;
+    --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 30 20% 95%;
     --sidebar-primary: 30 90% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 355 75% 30%;
     --sidebar-accent-foreground: 30 20% 95%;
-    --sidebar-border: 355 30% 18%;
+    --sidebar-border: 30 10% 14%;
     --sidebar-ring: 30 90% 45%;
 
-    /* 🍷 Custom restaurant tokens (maroon style) */
+    /* Custom restaurant tokens */
     --orange: 30 90% 45%;
     --orange-light: 33 85% 55%;
     --orange-soft: 30 70% 65%;
     --red-deep: 355 80% 35%;
-    --red-dark: 355 75% 25%;
-    --dark-bg: 355 70% 10%;
-    --dark-surface: 355 60% 14%;
-    --dark-elevated: 355 50% 18%;
+    --red-dark: 355 75% 28%;
+    --dark-bg: 0 0% 6%;
+    --dark-surface: 0 0% 9%;
+    --dark-elevated: 0 0% 13%;
     --cream: 30 20% 95%;
-    --cream-muted: 30 10% 65%;
+    --cream-muted: 30 10% 55%;
     
     --gradient-fire: linear-gradient(135deg, hsl(30 90% 45%), hsl(355 80% 35%));
     --gradient-warm: linear-gradient(135deg, hsl(30 90% 45%), hsl(33 85% 55%));
-    --gradient-dark: linear-gradient(180deg, hsl(355 70% 12%), hsl(355 80% 6%));
-    --gradient-card: linear-gradient(145deg, hsl(355 60% 16%), hsl(355 50% 10%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 6%), hsl(0 0% 3%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 11%), hsl(0 0% 7%));
     --gradient-glass: linear-gradient(135deg, hsl(30 30% 100% / 0.06), hsl(0 0% 100% / 0.02));
-    
-    --shadow-fire: 0 4px 30px -8px hsl(355 80% 35% / 0.4);
-    --shadow-card: 0 8px 32px -8px hsl(0 0% 0% / 0.7);
-    --shadow-glow: 0 0 40px -10px hsl(355 80% 35% / 0.3);
+    --shadow-fire: 0 4px 30px -8px hsl(30 90% 45% / 0.35);
+    --shadow-card: 0 8px 32px -8px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 40px -10px hsl(30 90% 45% / 0.25);
 
     --font-display: 'Playfair Display', serif;
     --font-body: 'DM Sans', sans-serif;

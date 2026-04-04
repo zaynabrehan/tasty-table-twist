@@ -7,6 +7,19 @@ import FoodCard from "@/components/FoodCard";
 
 type MenuItem = Tables<"menu_items">;
 
+const CATEGORY_ORDER = [
+  "All",
+  "Appetizers",
+  "Shawarma Platter",
+  "Turkish Wraps",
+  "Turkish Doner",
+  "Pouch Shawarma",
+  "Shawarma",
+  "Beverages",
+  "Jush Desserts",
+  "Add-ons",
+];
+
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -29,8 +42,10 @@ const MenuPage = () => {
         .order("name");
       if (data) {
         setMenuItems(data);
-        const cats = ["All", ...new Set(data.map((i) => i.category))];
-        setCategories(cats);
+        const dbCats = new Set(data.map((i) => i.category));
+        const ordered = CATEGORY_ORDER.filter((c) => c === "All" || dbCats.has(c));
+        const extra = [...dbCats].filter((c) => !CATEGORY_ORDER.includes(c));
+        setCategories([...ordered, ...extra]);
       }
       setLoading(false);
     };

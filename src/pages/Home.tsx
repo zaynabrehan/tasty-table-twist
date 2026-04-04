@@ -4,7 +4,7 @@ import FoodCard from "@/components/FoodCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
 import { motion } from "framer-motion";
-import { ArrowRight, Award, Clock, Flame, Loader2, Quote, Star, Truck } from "lucide-react";
+import { ArrowRight, Flame, Loader2, Quote, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -35,15 +35,6 @@ const Home = () => {
     };
     fetchPopular();
   }, []);
-
-  const features = [
-    { icon: Flame, title: "Charcoal Grilled", desc: "Authentic smoky flavors from traditional grilling" },
-    { icon: Clock, title: "Fast Delivery", desc: "Hot food at your doorstep in under 30 minutes" },
-    { icon: Star, title: "Premium Quality", desc: "Only the finest, freshest ingredients used" },
-    { icon: Truck, title: "Free Delivery", desc: "No delivery charges on orders above Rs. 1500" },
-    { icon: Award, title: "Award Winning", desc: "Recognized for Lahore's best Turkish cuisine" },
-    { icon: Flame, title: "Halal Certified", desc: "100% halal meat sourced from trusted suppliers" },
-  ];
 
   const testimonials = [
     { name: "Ahmed R.", text: "Best shawarma in Lahore, hands down! The flavors are incredible.", rating: 5 },
@@ -96,37 +87,6 @@ const Home = () => {
               <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-accent/20 blur-2xl" />
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="container mx-auto px-4 py-20">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="text-center mb-14">
-          <motion.h2 variants={fadeUp} custom={0} className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3">
-            Why Choose <span className="text-gradient-fire">Jushh</span>
-          </motion.h2>
-          <motion.p variants={fadeUp} custom={1} className="text-muted-foreground font-body max-w-lg mx-auto">
-            We don't just serve food — we deliver an experience
-          </motion.p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((f, i) => {
-            const Icon = f.icon;
-            return (
-              <motion.div key={f.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} className="glass-card rounded-2xl p-6 hover-lift group cursor-default">
-                <div className="flex items-start gap-4">
-                  <div className="w-20 h-20 flex-shrink-0 flex items-center justify-center rounded-2xl bg-gradient-fire group-hover:shadow-fire transition-shadow">
-                    <Icon className="w-10 h-10 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-bold text-foreground text-lg mb-1">{f.title}</h3>
-                    <p className="text-sm text-muted-foreground font-body">{f.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
         </div>
       </section>
 
