@@ -2,11 +2,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { useStore } from "@/context/StoreContext";
 import { supabase } from "@/integrations/supabase/client";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle, Loader2, MessageCircle, Minus, Plus, X } from "lucide-react";
+import { CheckCircle, Loader2, MessageCircle, Minus, Plus, X, Truck, Store } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Checkout = () => {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart, branch, setBranch } = useStore();
@@ -15,6 +16,7 @@ const Checkout = () => {
   const [notes, setNotes] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [placing, setPlacing] = useState(false);
+  const [orderType, setOrderType] = useState<"delivery" | "pickup">("delivery");
   const [orderSuccess, setOrderSuccess] = useState<{ orderId: string; whatsappUrl: string } | null>(null);
 
   if (!user) {
@@ -81,7 +83,7 @@ const Checkout = () => {
       toast.error("Please select a branch first.");
       return;
     }
-    if (!deliveryAddress.trim()) {
+    if (orderType === "delivery" && !deliveryAddress.trim()) {
       toast.error("Please enter your delivery address.");
       return;
     }
@@ -94,7 +96,8 @@ const Checkout = () => {
         branch: branch,
         total: cartTotal,
         notes: notes.trim() || null,
-        delivery_address: deliveryAddress.trim(),
+        delivery_address: orderType === "delivery" ? deliveryAddress.trim() : null,
+        order_type: orderType,
       })
       .select()
       .single();
@@ -120,10 +123,11 @@ const Checkout = () => {
       return;
     }
 
+    const orderTypeLabel = orderType === "pickup" ? "🏪 Pickup" : "🚚 Delivery";
     const orderText = cart
       .map((item) => `${item.name} x${item.quantity} - Rs.${item.price * item.quantity}`)
       .join("\n");
-    const whatsappMessage = `🛒 *New Order!*\n\n${orderText}\n\n💰 *Total: Rs.${cartTotal}*\n📍 *Branch:* ${branch}\n🏠 *Address:* ${deliveryAddress.trim()}\n📝 *Notes:* ${notes.trim() || "None"}\n\n📦 Order ID: ${order.id}`;
+    const whatsappMessage = `🛒 *New Order!*\n\n${orderText}\n\n💰 *Total: Rs.${cartTotal}*\n📍 *Branch:* ${branch}\n📦 *Type:* ${orderTypeLabel}\n${orderType === "delivery" ? `🏠 *Address:* ${deliveryAddress.trim()}\n` : ""}📝 *Notes:* ${notes.trim() || "None"}\n\n📦 Order ID: ${order.id}`;
     const whatsappUrl = `https://wa.me/923245531819?text=${encodeURIComponent(whatsappMessage)}`;
 
     setOrderSuccess({ orderId: order.id, whatsappUrl });
@@ -171,7 +175,42 @@ const Checkout = () => {
         <span className="font-bold text-lg text-primary font-body">Rs. {cartTotal}</span>
       </div>
 
+      {/* Order Type Selection */}
       <div className="mt-6">
+        <label className="text-sm text-muted-foreground font-body mb-3 block">Order Type *</label>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={() => setOrderType("delivery")}
+            className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+              orderType === "delivery"
+                ? "border-primary bg-primary/10 shadow-fire"
+                : "border-border bg-secondary hover:border-primary/50"
+            }`}
+          >
+            <Truck className={`w-6 h-6 ${orderType === "delivery" ? "text-primary" : "text-muted-foreground"}`} />
+            <span className={`font-body font-bold text-sm ${orderType === "delivery" ? "text-primary" : "text-muted-foreground"}`}>
+              Delivery
+            </span>
+            <span className="text-xs text-muted-foreground font-body">We'll bring it to you</span>
+          </button>
+          <button
+            onClick={() => setOrderType("pickup")}
+            className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+              orderType === "pickup"
+                ? "border-primary bg-primary/10 shadow-fire"
+                : "border-border bg-secondary hover:border-primary/50"
+            }`}
+          >
+            <Store className={`w-6 h-6 ${orderType === "pickup" ? "text-primary" : "text-muted-foreground"}`} />
+            <span className={`font-body font-bold text-sm ${orderType === "pickup" ? "text-primary" : "text-muted-foreground"}`}>
+              Pickup
+            </span>
+            <span className="text-xs text-muted-foreground font-body">Grab it on the go</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-4">
         <label className="text-sm text-muted-foreground font-body mb-1.5 block">Branch *</label>
         <Select value={branch || ""} onValueChange={(val) => setBranch(val)}>
           <SelectTrigger className="w-full bg-secondary border border-border rounded-xl text-foreground font-body">
@@ -184,17 +223,19 @@ const Checkout = () => {
         </Select>
       </div>
 
-      <div className="mt-4">
-        <label className="text-sm text-muted-foreground font-body mb-1.5 block">Delivery Address *</label>
-        <textarea
-          value={deliveryAddress}
-          onChange={(e) => setDeliveryAddress(e.target.value)}
-          placeholder="Enter your full delivery address..."
-          className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-foreground font-body placeholder:text-muted-foreground outline-none focus:border-primary focus:shadow-fire transition-all resize-none"
-          rows={2}
-          maxLength={300}
-        />
-      </div>
+      {orderType === "delivery" && (
+        <div className="mt-4">
+          <label className="text-sm text-muted-foreground font-body mb-1.5 block">Delivery Address *</label>
+          <textarea
+            value={deliveryAddress}
+            onChange={(e) => setDeliveryAddress(e.target.value)}
+            placeholder="Enter your full delivery address..."
+            className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-foreground font-body placeholder:text-muted-foreground outline-none focus:border-primary focus:shadow-fire transition-all resize-none"
+            rows={2}
+            maxLength={300}
+          />
+        </div>
+      )}
 
       <div className="mt-4">
         <label className="text-sm text-muted-foreground font-body mb-1.5 block">Order Notes (optional)</label>

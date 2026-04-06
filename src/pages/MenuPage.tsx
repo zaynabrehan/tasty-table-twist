@@ -20,6 +20,9 @@ const CATEGORY_ORDER = [
   "Add-ons",
 ];
 
+// Categories that should appear at the bottom
+const BOTTOM_CATEGORIES = ["Beverages", "Jush Desserts", "Add-ons"];
+
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -64,6 +67,16 @@ const MenuPage = () => {
           i.name.toLowerCase().includes(q) ||
           (i.description && i.description.toLowerCase().includes(q))
       );
+    }
+    // Sort: main items first, beverages/desserts/add-ons at the bottom
+    if (activeCategory === "All") {
+      items = [...items].sort((a, b) => {
+        const aIsBottom = BOTTOM_CATEGORIES.includes(a.category);
+        const bIsBottom = BOTTOM_CATEGORIES.includes(b.category);
+        if (aIsBottom && !bIsBottom) return 1;
+        if (!aIsBottom && bIsBottom) return -1;
+        return 0;
+      });
     }
     return items;
   }, [activeCategory, searchQuery, menuItems]);
