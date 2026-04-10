@@ -654,6 +654,11 @@ const Admin = () => {
             </div>
           )}
 
+          {/* ============ MESSAGES ============ */}
+          {tab === "messages" && (
+            <MessagesTab />
+          )}
+
           {/* ============ ADMIN USERS ============ */}
           {tab === "admins" && (
             <AdminUsersTab />
