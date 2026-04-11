@@ -3,7 +3,7 @@ import restaurantInterior from "@/assets/restaurant-interior.jpg";
 import FoodCard from "@/components/FoodCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
-import { motion, useMotionValue, useTransform, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, Flame, Loader2, Quote, Star, Utensils, Clock, Users } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
