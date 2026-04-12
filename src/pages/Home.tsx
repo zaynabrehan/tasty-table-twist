@@ -225,24 +225,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="container mx-auto px-4 py-10">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-          {[
-            { value: "10", suffix: "+", label: "Years", icon: Clock },
-            { value: "50", suffix: "+", label: "Dishes", icon: Utensils },
-            { value: "1", suffix: "M+", label: "Happy Customers", icon: Users },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center glass-card rounded-xl p-4 hover:shadow-fire transition-shadow duration-300 group">
-              <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center mx-auto mb-2 group-hover:bg-gradient-fire transition-all">
-                <stat.icon className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              </div>
-              <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-              <div className="text-xs text-muted-foreground font-body mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
-      </section>
 
       {/* Popular Picks */}
       <section className="container mx-auto px-4 py-16">
