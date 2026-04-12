@@ -6,11 +6,12 @@ import {
   Package, Plus, RefreshCw, Trash2, Upload,
   UtensilsCrossed, X, BarChart3, MapPin, FileText,
   Truck, Store, UserPlus, Shield, Mail, Eye, EyeOff,
+  Star, Check, XCircle,
 } from "lucide-react";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { toast } from "sonner";
 
-type Tab = "dashboard" | "orders" | "menu" | "messages" | "admins";
+type Tab = "dashboard" | "orders" | "menu" | "messages" | "reviews" | "admins";
 
 interface MenuItemRow {
   id: string;
