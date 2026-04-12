@@ -293,6 +293,7 @@ const Admin = () => {
     { key: "orders" as Tab, label: "Orders", icon: Package, badge: stats.pendingOrders },
     { key: "menu" as Tab, label: "Menu", icon: UtensilsCrossed },
     { key: "messages" as Tab, label: "Messages", icon: Mail },
+    { key: "reviews" as Tab, label: "Reviews", icon: Star },
     { key: "admins" as Tab, label: "Admin Users", icon: Shield },
   ];
 
