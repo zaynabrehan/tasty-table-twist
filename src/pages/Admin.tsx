@@ -682,6 +682,11 @@ const Admin = () => {
             <MessagesTab />
           )}
 
+          {/* ============ REVIEWS ============ */}
+          {tab === "reviews" && (
+            <ReviewsTab />
+          )}
+
           {/* ============ ADMIN USERS ============ */}
           {tab === "admins" && (
             <AdminUsersTab />
