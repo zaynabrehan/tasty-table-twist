@@ -364,7 +364,7 @@ const Admin = () => {
           {/* ============ DASHBOARD ============ */}
           {tab === "dashboard" && (
             <div className="space-y-6">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {[
                   { label: "Today's Orders", value: stats.todayOrders, icon: Package, color: "text-blue-400" },
                   { label: "Pending", value: stats.pendingOrders, icon: Clock, color: "text-yellow-400" },
