@@ -371,6 +371,7 @@ const Admin = () => {
                   { label: "Active", value: stats.activeOrders, icon: RefreshCw, color: "text-orange-400" },
                   { label: "Delivery", value: stats.deliveryOrders, icon: Truck, color: "text-purple-400" },
                   { label: "Pickup", value: stats.pickupOrders, icon: Store, color: "text-green-400" },
+                  { label: "Total Admins", value: totalAdmins, icon: Shield, color: "text-primary" },
                 ].map((stat) => (
                   <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-card rounded-2xl p-5">
                     <div className="flex items-center gap-3 mb-2">
