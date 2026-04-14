@@ -22,6 +22,22 @@ const CATEGORY_ORDER = [
 
 const BOTTOM_CATEGORIES = ["Beverages", "Jush Desserts", "Add-ons"];
 
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05 } },
+};
+
+const itemVariant = {
+  hidden: { opacity: 0, y: 20, scale: 0.95, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const },
+  },
+};
+
 const MenuPage = () => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [categories, setCategories] = useState<string[]>(["All"]);
@@ -75,23 +91,23 @@ const MenuPage = () => {
   }, [activeCategory, searchQuery, menuItems]);
 
   return (
-    <div className="container mx-auto px-4 py-10">
+    <div className="container mx-auto px-4 py-10 overflow-hidden">
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.7 }}
         className="text-center mb-10"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-body text-muted-foreground mb-4"
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-body text-muted-foreground mb-4 shimmer"
         >
           <Flame className="w-3 h-3 text-primary" /> Fresh & Handcrafted
         </motion.div>
         <h1 className="text-4xl font-display font-bold text-foreground mb-2">
-          Our <span className="text-gradient-fire">Menu</span>
+          Our <span className="text-gradient-fire text-glow">Menu</span>
         </h1>
         <p className="text-muted-foreground font-body">
           Discover our handcrafted dishes made with the finest ingredients
@@ -105,7 +121,7 @@ const MenuPage = () => {
         transition={{ delay: 0.3 }}
         className="max-w-md mx-auto mb-8"
       >
-        <div className="flex items-center glass rounded-xl px-4 py-3 focus-within:shadow-fire transition-shadow group">
+        <div className="flex items-center glass rounded-xl px-4 py-3 focus-within:shadow-fire transition-all group gradient-border-animated">
           <Search className="w-5 h-5 text-muted-foreground mr-3 group-focus-within:text-primary transition-colors" />
           <input
             type="text"
@@ -131,14 +147,22 @@ const MenuPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 + i * 0.04 }}
             onClick={() => setActiveCategory(cat)}
-            className={`relative px-4 py-2 rounded-xl text-sm font-bold font-body transition-all ${
+            className={`relative px-4 py-2 rounded-xl text-sm font-bold font-body transition-all duration-300 ${
               activeCategory === cat
                 ? "bg-gradient-fire text-primary-foreground shadow-fire"
                 : "glass text-muted-foreground hover:text-foreground hover:shadow-glow"
             }`}
             whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.05 }}
           >
             {cat}
+            {activeCategory === cat && (
+              <motion.div
+                layoutId="active-tab"
+                className="absolute inset-0 bg-gradient-fire rounded-xl -z-10"
+                transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+              />
+            )}
           </motion.button>
         ))}
       </motion.div>
@@ -146,25 +170,22 @@ const MenuPage = () => {
       {/* Grid */}
       {loading ? (
         <div className="flex justify-center py-20">
-          <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}>
+            <Loader2 className="w-8 h-8 text-primary" />
+          </motion.div>
         </div>
       ) : filtered.length > 0 ? (
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            key={activeCategory + searchQuery}
+            initial="hidden"
+            animate="visible"
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            variants={staggerContainer}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
-            {filtered.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: Math.min(i * 0.04, 0.4), duration: 0.4 }}
-              >
+            {filtered.map((item) => (
+              <motion.div key={item.id} variants={itemVariant}>
                 <FoodCard item={item} />
               </motion.div>
             ))}
@@ -172,8 +193,8 @@ const MenuPage = () => {
         </AnimatePresence>
       ) : (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, filter: "blur(8px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
           className="text-center py-20"
         >
           <p className="text-muted-foreground font-display text-xl">No dishes found</p>
